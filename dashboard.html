@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Task Manager - Dashboard</title>
+  <meta name="description" content="Manage your academic tasks, track course deadlines, and monitor completion progress with Student Task Manager.">
+  
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">
+          <i class="ri-graduation-cap-fill"></i>
+        </div>
+        <div class="brand-title">TaskManager</div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <span class="menu-label">Main Menu</span>
+        
+        <a href="dashboard.html" class="nav-link active" id="navDashboard">
+          <i class="ri-dashboard-3-line"></i>
+          <span>Dashboard</span>
+          <span class="badge-count" id="sidebarTotalBadge">0</span>
+        </a>
+        
+        <a href="add-task.html" class="nav-link" id="navAddTask">
+          <i class="ri-add-circle-line"></i>
+          <span>Add Task</span>
+        </a>
+        
+        <a href="my-tasks.html" class="nav-link" id="navMyTasks">
+          <i class="ri-checkbox-multiple-line"></i>
+          <span>My Tasks</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar User Profile -->
+      <div class="sidebar-user">
+        <div class="user-card">
+          <div class="user-avatar">ST</div>
+          <div class="user-info">
+            <span class="user-name">Alex Student</span>
+            <span class="user-role">Computer Science</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navigation Bar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Toggle Navigation Menu">
+            <i class="ri-menu-2-line"></i>
+          </button>
+          <h1 class="page-title">Student Task Manager</h1>
+        </div>
+
+        <div class="navbar-right">
+          <div class="date-display">
+            <i class="ri-calendar-2-line"></i>
+            <span id="currentDateText">Oct 2, 2026</span>
+          </div>
+          
+          <button class="icon-btn" aria-label="Notifications" title="Notifications">
+            <i class="ri-notification-3-line"></i>
+            <span class="notification-dot"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard Body Content -->
+      <main class="dashboard-content">
+
+        <!-- Welcome Banner Section -->
+        <section class="welcome-banner">
+          <div class="welcome-text">
+            <h1>Welcome Back, Student! 👋</h1>
+            <p>Track your assignments, stay on top of upcoming exams, and manage your daily academic productivity effortlessly.</p>
+          </div>
+          <a href="add-task.html" class="banner-action-btn">
+            <i class="ri-add-line"></i> Create New Task
+          </a>
+        </section>
+
+        <!-- Statistics Cards Grid (4 Cards) -->
+        <section class="stats-grid">
+          
+          <!-- Card 1: Total Tasks -->
+          <div class="stat-card total">
+            <div class="stat-info">
+              <span class="stat-label">Total Tasks</span>
+              <span class="stat-value" id="totalTasksCount">0</span>
+              <span class="stat-subtext"><i class="ri-stack-line"></i> Across all subjects</span>
+            </div>
+            <div class="stat-icon">
+              <i class="ri-task-line"></i>
+            </div>
+          </div>
+
+          <!-- Card 2: Completed Tasks -->
+          <div class="stat-card completed">
+            <div class="stat-info">
+              <span class="stat-label">Completed Tasks</span>
+              <span class="stat-value" id="completedTasksCount">0</span>
+              <span class="stat-subtext" id="completedSubtext"><i class="ri-checkbox-circle-line"></i> 0% of total tasks</span>
+            </div>
+            <div class="stat-icon">
+              <i class="ri-checkbox-circle-fill"></i>
+            </div>
+          </div>
+
+          <!-- Card 3: Pending Tasks -->
+          <div class="stat-card pending">
+            <div class="stat-info">
+              <span class="stat-label">Pending Tasks</span>
+              <span class="stat-value" id="pendingTasksCount">0</span>
+              <span class="stat-subtext"><i class="ri-time-line"></i> Requires your attention</span>
+            </div>
+            <div class="stat-icon">
+              <i class="ri-time-fill"></i>
+            </div>
+          </div>
+
+          <!-- Card 4: Overdue Tasks -->
+          <div class="stat-card overdue">
+            <div class="stat-info">
+              <span class="stat-label">Overdue Tasks</span>
+              <span class="stat-value" id="overdueTasksCount">0</span>
+              <span class="stat-subtext"><i class="ri-error-warning-line"></i> Past deadline</span>
+            </div>
+            <div class="stat-icon">
+              <i class="ri-alarm-warning-fill"></i>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Dashboard Main Grid: Recent Tasks & Task Completion Progress -->
+        <div class="dashboard-grid">
+          
+          <!-- Column 1: Recent Tasks List -->
+          <section class="dashboard-card">
+            <div class="card-header">
+              <h2 class="card-title">
+                <i class="ri-list-check-2"></i> Recent Tasks
+              </h2>
+              <a href="my-tasks.html" class="card-action-link">
+                View All <i class="ri-arrow-right-line"></i>
+              </a>
+            </div>
+
+            <!-- Task Filters -->
+            <div class="tasks-filter-bar">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="pending">Pending</button>
+              <button class="filter-btn" data-filter="completed">Completed</button>
+              <button class="filter-btn" data-filter="overdue">Overdue</button>
+            </div>
+
+            <!-- Tasks Container -->
+            <div class="task-list" id="recentTasksList">
+              <!-- Dynamically populated via js/dashboard.js -->
+            </div>
+          </section>
+
+          <!-- Column 2: Task Completion Progress -->
+          <section class="dashboard-card">
+            <div class="card-header">
+              <h2 class="card-title">
+                <i class="ri-pie-chart-2-line"></i> Completion Progress
+              </h2>
+            </div>
+
+            <div class="progress-container">
+              
+              <!-- Circular Gauge Chart -->
+              <div class="progress-circle-wrapper">
+                <svg class="progress-svg" viewBox="0 0 160 160">
+                  <defs>
+                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#2563eb" />
+                      <stop offset="100%" stop-color="#7c3aed" />
+                    </linearGradient>
+                  </defs>
+                  <circle class="progress-bg-circle" cx="80" cy="80" r="70"></circle>
+                  <circle class="progress-bar-circle" id="progressCircle" cx="80" cy="80" r="70"></circle>
+                </svg>
+                <div class="progress-text">
+                  <span class="progress-percentage" id="progressPercentage">0%</span>
+                  <span class="progress-label">Done</span>
+                </div>
+              </div>
+
+              <!-- Linear Status Breakdown Bars -->
+              <div class="progress-breakdown">
+                
+                <div class="breakdown-item">
+                  <div class="breakdown-header">
+                    <span class="breakdown-title">
+                      <span class="breakdown-dot completed"></span> Completed
+                    </span>
+                    <span class="breakdown-value" id="valCompleted">0 (0%)</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill completed" id="barFillCompleted" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <div class="breakdown-item">
+                  <div class="breakdown-header">
+                    <span class="breakdown-title">
+                      <span class="breakdown-dot pending"></span> Pending
+                    </span>
+                    <span class="breakdown-value" id="valPending">0 (0%)</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill pending" id="barFillPending" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <div class="breakdown-item">
+                  <div class="breakdown-header">
+                    <span class="breakdown-title">
+                      <span class="breakdown-dot overdue"></span> Overdue
+                    </span>
+                    <span class="breakdown-value" id="valOverdue">0 (0%)</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill overdue" id="barFillOverdue" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Productivity Tip Box -->
+            <div class="quick-tips-card">
+              <div class="tip-icon">
+                <i class="ri-lightbulb-line"></i>
+              </div>
+              <div class="tip-content">
+                <h4>Study Tip</h4>
+                <p>Break complex projects into smaller tasks with early deadlines to avoid last-minute rush!</p>
+              </div>
+            </div>
+
+          </section>
+
+        </div>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
