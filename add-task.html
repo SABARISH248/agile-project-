@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Task - Student Task Manager</title>
+  <meta name="description" content="Add a new academic assignment, project, or task to your Student Task Manager.">
+  
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/add-task.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">
+          <i class="ri-graduation-cap-fill"></i>
+        </div>
+        <div class="brand-title">TaskManager</div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <span class="menu-label">Main Menu</span>
+        
+        <a href="dashboard.html" class="nav-link" id="navDashboard">
+          <i class="ri-dashboard-3-line"></i>
+          <span>Dashboard</span>
+          <span class="badge-count" id="sidebarTotalBadge">0</span>
+        </a>
+        
+        <a href="add-task.html" class="nav-link active" id="navAddTask">
+          <i class="ri-add-circle-line"></i>
+          <span>Add Task</span>
+        </a>
+        
+        <a href="my-tasks.html" class="nav-link" id="navMyTasks">
+          <i class="ri-checkbox-multiple-line"></i>
+          <span>My Tasks</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar User Profile -->
+      <div class="sidebar-user">
+        <div class="user-card">
+          <div class="user-avatar">ST</div>
+          <div class="user-info">
+            <span class="user-name">Alex Student</span>
+            <span class="user-role">Computer Science</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navigation Bar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Toggle Navigation Menu">
+            <i class="ri-menu-2-line"></i>
+          </button>
+          <h1 class="page-title">Student Task Manager</h1>
+        </div>
+
+        <div class="navbar-right">
+          <div class="date-display">
+            <i class="ri-calendar-2-line"></i>
+            <span id="currentDateText">Oct 2, 2026</span>
+          </div>
+          
+          <button class="icon-btn" aria-label="Notifications" title="Notifications">
+            <i class="ri-notification-3-line"></i>
+            <span class="notification-dot"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Add Task Body Content -->
+      <main class="dashboard-content">
+
+        <!-- Header Title Section -->
+        <section class="page-header-card">
+          <div class="header-text-group">
+            <div class="breadcrumb-trail">
+              <a href="dashboard.html"><i class="ri-home-4-line"></i> Home</a>
+              <i class="ri-arrow-right-s-line separator"></i>
+              <span>Add New Task</span>
+            </div>
+            <h1 class="main-heading">Add New Task</h1>
+            <p class="sub-heading">Fill in the details below to schedule and organize your upcoming academic responsibilities.</p>
+          </div>
+          <div class="header-badge">
+            <i class="ri-add-line"></i>
+            <span>Task Creator</span>
+          </div>
+        </section>
+
+        <!-- Inline Global Toast Notification (Hidden by Default) -->
+        <div class="alert-toast success-toast" id="successToast" role="alert">
+          <div class="toast-icon">
+            <i class="ri-checkbox-circle-fill"></i>
+          </div>
+          <div class="toast-content">
+            <strong class="toast-title">Task Created Successfully!</strong>
+            <p class="toast-message" id="toastMessage">Your new task has been saved to LocalStorage.</p>
+          </div>
+          <button type="button" class="toast-close-btn" id="toastCloseBtn" aria-label="Close Notification">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+
+        <!-- Form & Live Preview Grid Layout -->
+        <div class="task-grid-container">
+
+          <!-- Task Creation Form Card -->
+          <div class="form-card">
+            <div class="card-header-styled">
+              <div class="header-icon-box">
+                <i class="ri-edit-box-line"></i>
+              </div>
+              <div class="header-info">
+                <h2>Task Details</h2>
+                <p>Provide accurate information for your new assignment</p>
+              </div>
+            </div>
+
+            <form id="addTaskForm" class="styled-task-form" novalidate>
+              
+              <!-- Task Title -->
+              <div class="form-group" id="groupTitle">
+                <label for="taskTitle" class="form-label">
+                  Task Title <span class="required-star">*</span>
+                </label>
+                <div class="input-wrapper">
+                  <i class="ri-book-open-line field-icon"></i>
+                  <input 
+                    type="text" 
+                    id="taskTitle" 
+                    name="title" 
+                    class="form-control" 
+                    placeholder="e.g. Complete Mathematics Assignment 4" 
+                    required
+                    autocomplete="off"
+                  >
+                </div>
+                <span class="error-msg" id="titleError"></span>
+              </div>
+
+              <!-- Row Grid: Subject & Due Date -->
+              <div class="form-row-2col">
+                
+                <!-- Subject Name -->
+                <div class="form-group" id="groupSubject">
+                  <label for="taskSubject" class="form-label">
+                    Subject Name <span class="required-star">*</span>
+                  </label>
+                  <div class="input-wrapper">
+                    <i class="ri-folders-line field-icon"></i>
+                    <input 
+                      type="text" 
+                      id="taskSubject" 
+                      name="subject" 
+                      class="form-control" 
+                      placeholder="e.g. Computer Science" 
+                      list="subjectSuggestions"
+                      required
+                      autocomplete="off"
+                    >
+                    <datalist id="subjectSuggestions">
+                      <option value="Mathematics">
+                      <option value="Computer Science">
+                      <option value="Physics">
+                      <option value="Chemistry">
+                      <option value="Biology">
+                      <option value="History">
+                      <option value="Literature">
+                      <option value="Engineering">
+                      <option value="Economics">
+                    </datalist>
+                  </div>
+                  <span class="error-msg" id="subjectError"></span>
+                  
+                  <!-- Quick Subject Chips -->
+                  <div class="quick-chips-wrapper">
+                    <span class="chips-label">Quick select:</span>
+                    <div class="chips-list">
+                      <button type="button" class="chip-btn" data-subject="Mathematics">Math</button>
+                      <button type="button" class="chip-btn" data-subject="Computer Science">CS</button>
+                      <button type="button" class="chip-btn" data-subject="Physics">Physics</button>
+                      <button type="button" class="chip-btn" data-subject="History">History</button>
+                      <button type="button" class="chip-btn" data-subject="Chemistry">Chemistry</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Due Date -->
+                <div class="form-group" id="groupDueDate">
+                  <label for="taskDueDate" class="form-label">
+                    Due Date <span class="required-star">*</span>
+                  </label>
+                  <div class="input-wrapper">
+                    <i class="ri-calendar-event-line field-icon"></i>
+                    <input 
+                      type="date" 
+                      id="taskDueDate" 
+                      name="dueDate" 
+                      class="form-control" 
+                      required
+                    >
+                  </div>
+                  <span class="error-msg" id="dueDateError"></span>
+                </div>
+
+              </div>
+
+              <!-- Priority Selector -->
+              <div class="form-group" id="groupPriority">
+                <label class="form-label">
+                  Priority Level <span class="required-star">*</span>
+                </label>
+                <div class="priority-options-grid">
+                  
+                  <label class="priority-card low">
+                    <input type="radio" name="priority" value="Low" id="prioLow">
+                    <div class="priority-content">
+                      <div class="prio-indicator"></div>
+                      <i class="ri-arrow-down-circle-line"></i>
+                      <div class="prio-info">
+                        <span class="prio-name">Low Priority</span>
+                        <span class="prio-desc">Flexible deadline</span>
+                      </div>
+                    </div>
+                  </label>
+
+                  <label class="priority-card medium">
+                    <input type="radio" name="priority" value="Medium" id="prioMedium" checked>
+                    <div class="priority-content">
+                      <div class="prio-indicator"></div>
+                      <i class="ri-subtract-line"></i>
+                      <div class="prio-info">
+                        <span class="prio-name">Medium Priority</span>
+                        <span class="prio-desc">Standard coursework</span>
+                      </div>
+                    </div>
+                  </label>
+
+                  <label class="priority-card high">
+                    <input type="radio" name="priority" value="High" id="prioHigh">
+                    <div class="priority-content">
+                      <div class="prio-indicator"></div>
+                      <i class="ri-fire-line"></i>
+                      <div class="prio-info">
+                        <span class="prio-name">High Priority</span>
+                        <span class="prio-desc">Urgent / Exam prep</span>
+                      </div>
+                    </div>
+                  </label>
+
+                </div>
+                <span class="error-msg" id="priorityError"></span>
+              </div>
+
+              <!-- Task Description -->
+              <div class="form-group" id="groupDescription">
+                <label for="taskDescription" class="form-label">
+                  Task Description <span class="required-star">*</span>
+                </label>
+                <div class="textarea-wrapper">
+                  <i class="ri-file-text-line textarea-icon"></i>
+                  <textarea 
+                    id="taskDescription" 
+                    name="description" 
+                    rows="4" 
+                    class="form-control textarea-control" 
+                    placeholder="Provide additional details, guidelines, sub-topics, or links for this task..."
+                    required
+                  ></textarea>
+                </div>
+                <div class="textarea-footer">
+                  <span class="error-msg" id="descriptionError"></span>
+                  <span class="char-count" id="charCount">0 / 500 characters</span>
+                </div>
+              </div>
+
+              <!-- Form Action Buttons -->
+              <div class="form-actions-bar">
+                <button type="submit" class="btn btn-primary-gradient" id="btnSubmit">
+                  <i class="ri-add-circle-fill"></i>
+                  <span>Create Task</span>
+                </button>
+                <button type="button" class="btn btn-secondary-outline" id="btnReset">
+                  <i class="ri-refresh-line"></i>
+                  <span>Reset Form</span>
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+          <!-- Live Card Preview Sidebar Column -->
+          <div class="preview-card-column">
+            <div class="preview-card">
+              <div class="preview-card-header">
+                <div class="preview-badge">
+                  <i class="ri-eye-line"></i>
+                  <span>Live Card Preview</span>
+                </div>
+                <span class="preview-status-pill pending">Pending</span>
+              </div>
+
+              <div class="preview-card-body">
+                <div class="preview-meta-top">
+                  <span class="subject-tag" id="previewSubject">Subject Name</span>
+                  <span class="priority-tag medium" id="previewPriority">
+                    <i class="ri-subtract-line"></i> Medium Priority
+                  </span>
+                </div>
+
+                <h3 class="preview-title" id="previewTitle">Your Task Title Will Appear Here</h3>
+                <p class="preview-description" id="previewDescription">Task description overview will display here in real-time as you type...</p>
+
+                <div class="preview-footer">
+                  <div class="date-info">
+                    <i class="ri-calendar-check-line"></i>
+                    <span id="previewDueDate">Due: Select Date</span>
+                  </div>
+                  <div class="storage-info" title="Task will be saved into browser LocalStorage key: studentTasks">
+                    <i class="ri-database-2-line"></i>
+                    <span>LocalStorage</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pro Tip Card -->
+            <div class="tip-box">
+              <div class="tip-icon">
+                <i class="ri-lightbulb-line"></i>
+              </div>
+              <div class="tip-content">
+                <strong>Academic Tip</strong>
+                <p>Setting realistic due dates and categorizing tasks by priority helps reduce last-minute study stress!</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/dashboard.js"></script>
+  <script src="js/add-task.js"></script>
+</body>
+</html>
