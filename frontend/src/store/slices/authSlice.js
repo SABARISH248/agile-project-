@@ -1,14 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../api/axios';
 
-const userStorage = localStorage.getItem('tracely_user');
-const initialUser = userStorage ? JSON.parse(userStorage) : null;
+let initialUser = null;
+try {
+  const userStorage = localStorage.getItem('tracely_user');
+  if (userStorage && userStorage !== 'undefined' && userStorage !== 'null') {
+    initialUser = JSON.parse(userStorage);
+  }
+} catch (e) {
+  localStorage.removeItem('tracely_user');
+}
 
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
     const res = await api.post('/auth/login', credentials);
-    localStorage.setItem('tracely_user', JSON.stringify(res.data.data));
-    return res.data.data;
+    const authData = res.data.user
+      ? { ...res.data.user, token: res.data.token }
+      : (res.data.data || res.data);
+    localStorage.setItem('tracely_user', JSON.stringify(authData));
+    return authData;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || 'Login failed. Please check credentials.');
   }
@@ -17,8 +27,11 @@ export const login = createAsyncThunk('auth/login', async (credentials, { reject
 export const register = createAsyncThunk('auth/register', async (userData, { rejectWithValue }) => {
   try {
     const res = await api.post('/auth/register', userData);
-    localStorage.setItem('tracely_user', JSON.stringify(res.data.data));
-    return res.data.data;
+    const authData = res.data.user
+      ? { ...res.data.user, token: res.data.token }
+      : (res.data.data || res.data);
+    localStorage.setItem('tracely_user', JSON.stringify(authData));
+    return authData;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || 'Registration failed.');
   }
@@ -27,7 +40,11 @@ export const register = createAsyncThunk('auth/register', async (userData, { rej
 export const getMe = createAsyncThunk('auth/getMe', async (_, { rejectWithValue }) => {
   try {
     const res = await api.get('/auth/me');
-    return res.data.data;
+    const existing = JSON.parse(localStorage.getItem('tracely_user') || '{}');
+    const userPayload = res.data.user || res.data.data || res.data;
+    const updated = { ...existing, ...userPayload };
+    localStorage.setItem('tracely_user', JSON.stringify(updated));
+    return updated;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || 'Failed to fetch user');
   }
@@ -37,9 +54,10 @@ export const updateProfile = createAsyncThunk('auth/updateProfile', async (data,
   try {
     const res = await api.put('/auth/profile', data);
     const existing = JSON.parse(localStorage.getItem('tracely_user') || '{}');
-    const updated = { ...existing, ...res.data.data };
+    const userPayload = res.data.user || res.data.data || res.data;
+    const updated = { ...existing, ...userPayload };
     localStorage.setItem('tracely_user', JSON.stringify(updated));
-    return res.data.data;
+    return updated;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || 'Failed to update profile');
   }
@@ -100,11 +118,13 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      // GetMe
+      .addCase(getMe.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
       // Profile
       .addCase(updateProfile.fulfilled, (state, action) => {
-        if (state.user) {
-          state.user = { ...state.user, ...action.payload };
-        }
+        state.user = action.payload;
       });
   },
 });

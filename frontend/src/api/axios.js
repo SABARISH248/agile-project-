@@ -11,14 +11,14 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const userInfo = localStorage.getItem('tracely_user');
-    if (userInfo) {
+    if (userInfo && userInfo !== 'undefined' && userInfo !== 'null') {
       try {
         const parsed = JSON.parse(userInfo);
-        if (parsed.token) {
+        if (parsed?.token) {
           config.headers.Authorization = `Bearer ${parsed.token}`;
         }
       } catch (err) {
-        console.error('Failed to parse user info from localStorage', err);
+        localStorage.removeItem('tracely_user');
       }
     }
     return config;
