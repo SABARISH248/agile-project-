@@ -23,47 +23,48 @@
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #0f172a;
-  color: #e2e8f0;
+  background-color: #f8fafc;
+  color: #0f172a;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* ========================
-   Form Input Defaults & Dark Mode
+   Form Input Defaults & Light Mode
 ======================== */
 input, select, textarea {
-  background-color: #0f172a !important;
-  color: #f8fafc !important;
-  border-color: #334155 !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
 }
 
 input:focus, select:focus, textarea:focus {
-  background-color: #0f172a !important;
-  color: #ffffff !important;
-  border-color: #0ea5e9 !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2) !important;
   outline: none !important;
 }
 
 input::placeholder, textarea::placeholder {
-  color: #64748b !important;
+  color: #94a3b8 !important;
   opacity: 1 !important;
 }
 
-/* Fix browser autofill turning inputs white with white text */
+/* Fix browser autofill */
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 40px #0f172a inset !important;
-  -webkit-text-fill-color: #f8fafc !important;
-  caret-color: #f8fafc !important;
+  -webkit-box-shadow: 0 0 0 40px #ffffff inset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  caret-color: #0f172a !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 
 select option {
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: #ffffff;
+  color: #0f172a;
 }
 
 /* ========================
@@ -531,3 +532,71 @@ select option {
 }
 
 .animate-fade-in { animation: fadeIn 0.35s ease; }
+
+/* ========================
+   Light Theme Typography & Borders Overrides
+======================== */
+h1, h2, h3, h4, .font-heading, .page-title {
+  color: #0f172a !important;
+}
+
+/* Headings and card titles */
+div:not([class*="bg-brand"]):not([class*="bg-indigo"]):not([class*="bg-emerald"]):not([class*="bg-gradient"]) > h1,
+div:not([class*="bg-brand"]):not([class*="bg-indigo"]):not([class*="bg-emerald"]):not([class*="bg-gradient"]) > h2,
+div:not([class*="bg-brand"]):not([class*="bg-indigo"]):not([class*="bg-emerald"]):not([class*="bg-gradient"]) > h3,
+div:not([class*="bg-brand"]):not([class*="bg-indigo"]):not([class*="bg-emerald"]):not([class*="bg-gradient"]) > .text-white,
+span.text-white:not(button span):not([class*="bg-"] span),
+p.text-white:not(button p):not([class*="bg-"] p),
+td .text-white {
+  color: #0f172a !important;
+}
+
+.text-slate-200, .text-slate-300 {
+  color: #334155 !important;
+}
+
+.text-slate-400 {
+  color: #64748b !important;
+}
+
+/* Soft borders in light theme */
+[class*="border-slate-700"], [class*="border-slate-800"] {
+  border-color: #e2e8f0 !important;
+}
+
+[class*="divide-slate-700"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+
+/* Light cards shadow and borders */
+.bg-dark-800\/80, .bg-dark-850\/80, .bg-dark-900, .bg-dark-800 {
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+.bg-dark-900\/60, .bg-dark-900\/50, .bg-dark-900\/40, .bg-dark-900\/30, .bg-dark-850 {
+  background-color: #f8fafc !important;
+}
+
+.hover\:bg-slate-800\/40:hover, .hover\:bg-slate-750:hover, .hover\:bg-dark-800\/80:hover {
+  background-color: #f1f5f9 !important;
+}
+
+/* Primary buttons must preserve bright white text */
+button[class*="bg-gradient"], 
+button[class*="bg-brand"], 
+button[class*="bg-indigo"], 
+button[class*="bg-emerald"],
+a[class*="bg-gradient"],
+a[class*="bg-brand"],
+.badge-brand,
+.badge-indigo {
+  color: #ffffff !important;
+}
+
+button[class*="bg-gradient"] *,
+button[class*="bg-brand"] *,
+button[class*="bg-indigo"] *,
+button[class*="bg-emerald"] * {
+  color: #ffffff !important;
+}

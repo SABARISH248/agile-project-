@@ -97,7 +97,7 @@ export default function AdminDashboard() {
         />
         <StatCard
           title="Total Gross Revenue"
-          value={`$${(stats.totalRevenue || 124500).toLocaleString()}`}
+          value={`₹${(stats.totalRevenue || 124500).toLocaleString()}`}
           change="+18.4%"
           changeType="positive"
           icon={DollarSign}
@@ -152,15 +152,15 @@ export default function AdminDashboard() {
                     <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
-                <XAxis dataKey="month" stroke="#94a3b8" fontSize={11} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickFormatter={(val) => `$${val / 1000}k`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.8} />
+                <XAxis dataKey="month" stroke="#64748b" fontSize={11} />
+                <YAxis stroke="#64748b" fontSize={11} tickFormatter={(val) => `₹${val / 1000}k`} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px' }}
+                  contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', borderRadius: '8px', color: '#0f172a' }}
                   itemStyle={{ fontSize: '12px' }}
                 />
-                <Area type="monotone" dataKey="revenue" stroke="#f97316" strokeWidth={2} fillOpacity={1} fill="url(#colorRev)" name="Revenue ($)" />
-                <Area type="monotone" dataKey="expenses" stroke="#6366f1" strokeWidth={2} fillOpacity={1} fill="url(#colorExp)" name="Expenses ($)" />
+                <Area type="monotone" dataKey="revenue" stroke="#f97316" strokeWidth={2} fillOpacity={1} fill="url(#colorRev)" name="Revenue (₹)" />
+                <Area type="monotone" dataKey="expenses" stroke="#6366f1" strokeWidth={2} fillOpacity={1} fill="url(#colorExp)" name="Expenses (₹)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>

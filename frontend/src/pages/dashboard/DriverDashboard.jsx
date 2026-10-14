@@ -300,7 +300,7 @@ export default function DriverDashboard() {
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-              Amount ($)
+              Amount (₹)
             </label>
             <input
               type="number"
@@ -308,7 +308,7 @@ export default function DriverDashboard() {
               min="1"
               value={expenseData.amount}
               onChange={(e) => setExpenseData({ ...expenseData, amount: e.target.value })}
-              placeholder="e.g. 150"
+              placeholder="e.g. 1500"
               className="w-full px-3 py-2 bg-dark-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-brand-500"
             />
           </div>

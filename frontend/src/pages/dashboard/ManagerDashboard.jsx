@@ -241,8 +241,8 @@ export default function ManagerDashboard() {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-white capitalize">{exp.category}</span>
-                      <span className="text-xs font-mono font-bold text-brand-400">
-                        ${exp.amount?.toLocaleString()}
+                      <span className="text-xs font-mono font-bold text-brand-500">
+                        ₹{exp.amount?.toLocaleString()}
                       </span>
                     </div>
                     <p className="text-[10px] text-slate-400 mt-0.5">
