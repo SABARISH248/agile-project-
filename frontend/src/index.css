@@ -30,6 +30,43 @@ body {
 }
 
 /* ========================
+   Form Input Defaults & Dark Mode
+======================== */
+input, select, textarea {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border-color: #0ea5e9 !important;
+  outline: none !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #64748b !important;
+  opacity: 1 !important;
+}
+
+/* Fix browser autofill turning inputs white with white text */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 40px #0f172a inset !important;
+  -webkit-text-fill-color: #f8fafc !important;
+  caret-color: #f8fafc !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+select option {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+/* ========================
    Scrollbar Styling
 ======================== */
 ::-webkit-scrollbar {
